@@ -7,6 +7,7 @@ import com.microsoft.playwright.Playwright;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
 
 /**
  * @author Kiko Song
@@ -22,7 +23,7 @@ public class BaiDuTest {
         page = browser.newPage();
     }
 
-    @org.testng.annotations.Test
+    @Test
     public void testHomePageTitle() {
         page.navigate("https://baidu.com");
         String title = page.title();
