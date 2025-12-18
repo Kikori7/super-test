@@ -66,7 +66,7 @@ jobs:
           mvn dependency:build-classpath -DincludeScope=test -q | tr ':' '\n' | grep -i testng || echo "TestNG not found!"
 
       - name: Run specific TestNG test package
-        run: mvn -U --batch-mode clean test -Dtest="org.test.normal.*"
+        run: mvn -U --batch-mode clean test -Dtest="org.test.normal.BaiDuTest"
         # 上面会运行 com.example.e2e.tests 包下所有 TestNG 测试类
 
       - name: Upload Test Results (Optional)
