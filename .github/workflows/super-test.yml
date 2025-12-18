@@ -43,6 +43,23 @@ jobs:
             </mirrors>
           </settings>
           EOF
+      - name:Debug: Show test source files
+        run: |
+          echo "=== Source test files ==="
+          find src/test -name "*.java" | sort
+
+      - name:Debug: Compile tests explicitly
+        run: mvn clean test-compile -q
+
+      - name:Debug: Show compiled test classes
+        run: |
+          echo "=== Compiled test classes ==="
+          find target/test-classes -type f | grep -i normal || echo "❌ No compiled classes found for 'normal'!"
+
+      - name:Debug: Check if TestNG is in test classpath
+        run: |
+          echo "=== TestNG in classpath? ==="
+          mvn dependency:build-classpath -DincludeScope=test -q | tr ':' '\n' | grep -i testng || echo "❌ TestNG not found!"
 
       - name: Run specific TestNG test package
         run: mvn -U --batch-mode clean test -Dtest="org.test.normal.*"
