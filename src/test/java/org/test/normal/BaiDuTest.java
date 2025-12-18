@@ -12,7 +12,7 @@ import org.testng.annotations.BeforeClass;
  * @author Kiko Song
  * @create 2025-12-18 15:02
  */
-public class Test {
+public class BaiDuTest {
     private Browser browser;
     private Page page;
     @BeforeClass
