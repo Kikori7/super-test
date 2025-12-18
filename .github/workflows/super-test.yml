@@ -25,6 +25,10 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven-
 
+      - name: Setup Node.js
+          uses: actions/setup-node@v4
+          with:
+            node-version: '18'
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
         # 注意：如果你的 Playwright 是通过 Java 调用的，仍需此步骤来安装浏览器二进制文件
@@ -43,23 +47,23 @@ jobs:
             </mirrors>
           </settings>
           EOF
-      - name:Debug: Show test source files
+      - name: Debug:Show test source files
         run: |
           echo "=== Source test files ==="
           find src/test -name "*.java" | sort
 
-      - name:Debug: Compile tests explicitly
+      - name: Debug:Compile tests explicitly
         run: mvn clean test-compile -q
 
-      - name:Debug: Show compiled test classes
+      - name: Debug:Show compiled test classes
         run: |
           echo "=== Compiled test classes ==="
-          find target/test-classes -type f | grep -i normal || echo "❌ No compiled classes found for 'normal'!"
+          find target/test-classes -type f | grep -i normal || echo "No compiled classes found for 'normal'!"
 
-      - name:Debug: Check if TestNG is in test classpath
+      - name: Debug:Check if TestNG is in test classpath
         run: |
           echo "=== TestNG in classpath? ==="
-          mvn dependency:build-classpath -DincludeScope=test -q | tr ':' '\n' | grep -i testng || echo "❌ TestNG not found!"
+          mvn dependency:build-classpath -DincludeScope=test -q | tr ':' '\n' | grep -i testng || echo "TestNG not found!"
 
       - name: Run specific TestNG test package
         run: mvn -U --batch-mode clean test -Dtest="org.test.normal.*"
